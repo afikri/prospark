@@ -1,6 +1,6 @@
-$(document).ajaxSend(function() {
-    $("#overlay").fadeIn(300);　
-  });
+$(document).ajaxSend(function () {
+    $("#overlay").fadeIn(300);
+});
 
 $(document).ready(function () {
     const apiUrl = 'http://localhost:8000/api/products';
@@ -13,6 +13,9 @@ $(document).ready(function () {
 
             success: function (data) {
                 console.log(data);
+                if(data.length<1)
+                    alert("No data available");
+
                 for (let i = 0; i < data.length; i++) {
                     const row = $("<tr><td>" + data[i].name + "</td>" +
                         "<td>" + data[i].description + "</td>" +
@@ -20,14 +23,17 @@ $(document).ready(function () {
                         "<td>" + data[i].qty + "</td></tr>");
                     $("#myTable").append(row);
                 }
+
+
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error: ' + textStatus + ' - ' + errorThrown);
             }
-        }).done(function(){
-            setTimeout(function(){
+        }).done(function () {
+            setTimeout(function () {
                 $("#overlay").fadeOut(300);
-              },500);
+            }, 500);
         });
     });
 });
